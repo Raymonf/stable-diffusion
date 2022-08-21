@@ -309,7 +309,12 @@ if __name__ == "__main__":
     config = OmegaConf.load(f"{opt.config}")
     model = load_model_from_config(config, f"{opt.ckpt}")
 
-    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    if(torch.cuda.is_available()):
+        device = torch.device("cuda")
+    elif(torch.backends.mps.is_available()):
+        device = torch.device("mps")
+    else:
+        device = torch.device("cpu")
     model = model.to(device)
 
     clip_text_encoder = FrozenCLIPTextEmbedder(opt.clip_type).to(device)
