@@ -13,7 +13,6 @@ def get_default_device_type():
     if torch.cuda.is_available():
         return "cuda"
     elif torch.backends.mps.is_available():
-        print("HI")
         return "mps"
     else:
         return "cpu"
